@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xml>
+<configuration scan="true" scanPeriod="30 seconds">
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- encoders are assigned the type
+               ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <!-- standard encoder -->
+    <encoder>
+      <pattern>[application-integration-messages] %d{dd-MMM-yyyy | HH:mm:ss.SSSSSS} | [%-30.30thread] | %-5level| %X{camel.breadcrumbId} | %-34.55X{camel.routeId} | %-35.35logger{35}  : %msg%n </pattern>
+    </encoder>
+    <!-- JSON encoder 
+          <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeMdc>true</includeMdc>
+          </encoder> -->
+  </appender>
+
+
+  <appender name="STD-OUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- if condition='isNull({camel.routeId})'>
+            <then>
+                <encoder>
+                    <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{35} -
+                     %msg%n</pattern>
+                 </encoder>
+            </then>
+            <else>
+                <file>${USER_HOME2}/${log.name}.log</file>
+            </else>
+        </if -->
+    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+      <evaluator>
+        <expression>
+          if(logger.contains("uk.co.arcadiagroup.integration"))
+            if(mdc == null || mdc.get("camel.breadcrumbId") == null ||  mdc.get("camel.breadcrumbId")=="")             
+              return false;
+          return true;
+        </expression>
+      </evaluator>
+      <OnMismatch>DENY</OnMismatch>
+      <OnMatch>NEUTRAL</OnMatch>
+    </filter>
+
+    <!-- encoder>
+      <pattern>%d{dd-MMM-yyyy HH:mm:ss.SSSSSS} | %-5.5p | %-25.50X{camel.breadcrumbId} | %-20.20X{state} |  %msg%n%ex</pattern>
+
+    </encoder -->
+
+    <!--JSON encoder -->
+     
+          <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+              <providers>
+                  <timestamp/>
+                  <version/>
+                  <pattern>
+                      <pattern>
+                          {"date": "%date{dd-MMM-yyyy-HH:mm:ss.SSSSSS,${logback.timezone:-Europe/London}}", "level": "%p", "message": "%msg%n%ex"}
+                      </pattern>
+                  </pattern>
+              </providers>
+            <includeMdc>true</includeMdc>
+          </encoder>
+ 
+  </appender>
+  <!-- appender name="LOG_STASH" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+          <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter"/>          
+      </layout>
+  </encoder>
+  </appender -->
+
+  <root level="info">
+    <appender-ref ref="STD-OUT" />
+  </root>
+
+</configuration>
