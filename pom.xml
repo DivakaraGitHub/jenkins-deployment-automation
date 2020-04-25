@@ -129,7 +129,9 @@
     </dependencies>
 
     <!-- Profile and Build -->
- <profile>
+
+    <profiles>
+     <profile>
             <id>local</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -179,7 +181,6 @@
                 </plugins>
             </build>
         </profile>
-    <profiles>
         <profile>
             <id>openshift</id>
             <build>
