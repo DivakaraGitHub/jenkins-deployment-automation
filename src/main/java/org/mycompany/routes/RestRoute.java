@@ -3,8 +3,6 @@ package org.mycompany.routes;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
-import io.swagger.util.Json;
-
 @Component
 public class RestRoute extends RouteBuilder {
 
