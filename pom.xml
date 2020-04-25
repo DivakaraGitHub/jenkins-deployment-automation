@@ -22,7 +22,8 @@
 
         <fuse.version>7.3.1.fuse-731003-redhat-00003</fuse.version>
         <spring-boot.version>1.5.17.RELEASE</spring-boot.version>
-
+ 		<camel.version>2.21.2</camel.version>
+ 		<fabric8.version>2.3.7</fabric8.version>
         <!-- maven plugin versions -->
         <cxf-codegen-plugin.version>3.2.7.fuse-740026-redhat-00001</cxf-codegen-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -36,6 +37,27 @@
                 <groupId>org.jboss.redhat-fuse</groupId>
                 <artifactId>fuse-springboot-bom</artifactId>
                 <version>${fuse.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.fabric8</groupId>
+                <artifactId>fabric8-project-bom-camel-spring-boot</artifactId>
+                <version>${fabric8.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-spring-boot-dependencies</artifactId>
+                <version>${camel.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
