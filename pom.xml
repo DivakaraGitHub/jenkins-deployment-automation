@@ -129,7 +129,56 @@
     </dependencies>
 
     <!-- Profile and Build -->
+ <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.hsqldb</groupId>
+                    <artifactId>hsqldb</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-devtools</artifactId>
+                    <optional>true</optional>
+                </dependency>
+            </dependencies>
 
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven-compiler-plugin.version}</version>
+                        <configuration>
+                            <source>${java.version}</source>
+                            <target>${java.version}</target>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.jboss.redhat-fuse</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${fuse.version}</version>
+                    </plugin>
+
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <version>${maven-surefire-plugin.version}</version>
+                        <inherited>true</inherited>
+                        <configuration>
+                            <argLine>-DenableImageStreamDetection=true</argLine>
+                            <excludes>
+                                <exclude>**/*KT.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
     <profiles>
         <profile>
             <id>openshift</id>
