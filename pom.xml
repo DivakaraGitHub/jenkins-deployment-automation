@@ -136,7 +136,7 @@
                 <property>
                     <name>openshift</name>
                 </property>
-                <activeByDefault>false</activeByDefault>
+                <activeByDefault>true</activeByDefault>
             </activation>
 
             <properties>
