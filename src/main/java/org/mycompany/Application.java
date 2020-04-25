@@ -17,13 +17,12 @@ package org.mycompany;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
  * A spring-boot application that includes a Camel route builder to setup the Camel routes
  */
 @SpringBootApplication
-@ComponentScan("org.mycompany")
+//@ComponentScan("org.mycompany")
 public class Application {
 
     // must have a main method spring-boot can run
