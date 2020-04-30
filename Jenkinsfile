@@ -37,18 +37,13 @@ pipeline {
                  sh "mvn clean package -DskipTests=true"
               }
             }
-		stage("Test") {
-            steps {
-               sh "mvn  test"
-            }
-        }
 		stage("Create ConfigMap") {
             steps {
                 script {
                     openshift.withCluster() {
                         openshift.withProject(env.DEV_PROJECT) {
                              openshift.apply(openshift.raw("create configmap ${APPLICATION_NAME}-cm --dry-run --from-file=${APP_TEMPLATE_PARAMETERS} --output=yaml").actions[0].out)
-							 openshift.apply(openshift.process(readFile(file: ${APPLICATION_NAME})))
+							 openshift.apply(openshift.process(readFile(file: './configuration/template.yaml')))
                         }
                     }
                 }
