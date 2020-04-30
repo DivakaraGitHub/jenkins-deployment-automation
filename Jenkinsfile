@@ -67,7 +67,7 @@ pipeline {
             }
         }
 		
-	
+	}
 	post {
             failure {
                 mail to: 'DK00600384@techmahindra.com', from: 'jenkinsopenshift@techmahindra.com',
