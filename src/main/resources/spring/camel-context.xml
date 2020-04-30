@@ -8,12 +8,11 @@
 
   <!-- Define a traditional camel context here -->
   <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
-<restConfiguration bindingMode="auto" component="restlet" port="8090"/>
-    <rest path="/say">
-    <get uri="/hello">
+    <rest path="/say" >
+    <get uri="/hello" consumes="application/json" produces="application/json">
       <to uri="direct:hello"/>
     </get>
-    <get uri="/bye" consumes="application/json">
+    <get uri="/bye" consumes="application/json" produces="application/json">
       <to uri="direct:bye"/>
     </get>
     <post uri="/bye">
@@ -25,12 +24,14 @@
     <transform>
       <constant>Hello World</constant>
     </transform>
+	<log message="Hello World Route called"/>
   </route>
   <route>
     <from uri="direct:bye"/>
     <transform>
       <constant>Bye World</constant>
     </transform>
+	<log message="Bye World Route called"/>
   </route>
   </camelContext>
 
