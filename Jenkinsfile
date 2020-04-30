@@ -8,15 +8,8 @@ pipeline {
 		APP_TEMPLATE_PARAMETERS = './src/main/resources/application.properties'
 		TEMPLATE_YAML = './configuration/template.yaml'
         GIT_BRANCH="master"
-        STAGE_TAG = "promoteToQA"
         DEV_PROJECT = "fuse-on-ocp-18e9"
-        STAGE_PROJECT = "stage"
-        TEMPLATE_NAME = "jenkins-deployment-automation"
-        ARTIFACT_FOLDER = "./target"
-		BASE_IMAGE = "fuse7-java-openshift:1.3"
-		BUILD_TAG = "latest"
-		JOB_NAME = "Jenkins-Openshift-CICD"
-        PORT = 8090;
+		JOB_NAME = "Jenkins-Openshift-CICD";
     }
 	tools {
         maven 'M3'
@@ -39,6 +32,11 @@ pipeline {
                  git branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
              }
            }
+		stage("Compile") {
+             steps {              
+                 sh "mvn clean package -DskipTests=true"
+              }
+            }
 		stage("Test") {
             steps {
                sh "mvn  test"
@@ -50,7 +48,7 @@ pipeline {
                     openshift.withCluster() {
                         openshift.withProject(env.DEV_PROJECT) {
                              openshift.apply(openshift.raw("create configmap ${APPLICATION_NAME}-cm --dry-run --from-file=${APP_TEMPLATE_PARAMETERS} --output=yaml").actions[0].out)
-							 openshift.apply(openshift.process(readFile(file: './configuration/template.yaml')))
+							 openshift.apply(openshift.process(readFile(file: ${APPLICATION_NAME})))
                         }
                     }
                 }
@@ -62,7 +60,7 @@ pipeline {
             failure {
                 mail to: 'DK00600384@techmahindra.com', from: 'jenkinsopenshift@techmahindra.com',
                 subject: "Jenkins Build: ${env.JOB_NAME} - Failed", 
-                body: "Job Failed - \"${env.JOB_NAME}\" for build: ${env.TEMPLATE_NAME}\n\n"
+                body: "Job Failed - \"${env.JOB_NAME}\" for build: ${env.APPLICATION_NAME}\n\n"
             }
         }
 }
