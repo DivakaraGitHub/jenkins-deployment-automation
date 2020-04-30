@@ -39,11 +39,6 @@ pipeline {
                  git branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
              }
            }
-		stage("Compile") {
-             steps {              
-                 sh "mvn clean package -DskipTests=true"
-              }
-            }
 		stage("Test") {
             steps {
                sh "mvn  test"
