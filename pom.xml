@@ -184,6 +184,7 @@
                                 <goals>
                                     <goal>resource</goal>
                                     <goal>build</goal>
+                                    <goal>deploy</goal>
                                 </goals>
                             </execution>
                         </executions>
