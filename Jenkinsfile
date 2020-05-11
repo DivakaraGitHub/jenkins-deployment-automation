@@ -32,11 +32,11 @@ pipeline {
                  git branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
              }
            }
-		stage("Compile") {
-             steps {              
-                 sh "mvn clean package -DskipTests=true"
-              }
-            }
+		//stage("Compile") {
+             //steps {              
+                 //sh "mvn clean package -DskipTests=true"
+              //}
+            //}
 		stage("Create ConfigMap") {
             steps {
                 script {
