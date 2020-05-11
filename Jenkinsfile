@@ -8,7 +8,7 @@ pipeline {
 		APP_TEMPLATE_PARAMETERS = './src/main/resources/application.properties'
 		TEMPLATE_YAML = './configuration/template.yaml'
         GIT_BRANCH="master"
-        DEV_PROJECT = "fuse-on-ocp-18e9"
+        DEV_PROJECT = "fuse-on-ocp-3b49"
 		JOB_NAME = "Jenkins-Openshift-CICD";
     }
 	tools {
